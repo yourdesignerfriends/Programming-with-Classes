@@ -13,13 +13,13 @@ class Program
         back all on one line saying, "Your name is last-name, first-name, last-name".
         Make sure to be precise! You should have the spacing, comma, and period appear exactly as shown in the examples.
         */
-        
+
         Console.Write("\nWhat is your first name? ");
         string first_name = Console.ReadLine();
 
         Console.Write("What is your last name? ");
         string last_name = Console.ReadLine();
 
-        Console.WriteLine($"Your name is {last_name}, {first_name} {last_name}.");
+        Console.WriteLine($"Your name is {last_name}, {first_name} {last_name}.\n");
     }
 }
