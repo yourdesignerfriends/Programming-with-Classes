@@ -10,31 +10,36 @@ class Program
         int userNumber = PromptUserNumber();
         int numberSquared = SquareNumber(userNumber);
         DisplayResult(user_name, numberSquared);
-        // 1. DisplayWelcome - Displays the message, "Welcome to the Program!"
+        
         static void DisplayWelcome()
+        // 1. DisplayWelcome - Displays the message, "Welcome to the Program!"
         {
             Console.WriteLine("\n --------------- Welcome to the Program! --------------- \n");
         }
-        // 2. PromptUserName - Asks for and returns the user's name (as a string)
+        
         static string PromptUserName()
+        // 2. PromptUserName - Asks for and returns the user's name (as a string)
         {
             Console.Write("🤔 What is your name: ");
             string user_name = Console.ReadLine();
             return user_name.ToUpper();
         }
-        // 3. PromptUserNumber - Asks for and returns the user's favorite number (as an integer)
+        
         static int PromptUserNumber()
+        // 3. PromptUserNumber - Asks for and returns the user's favorite number (as an integer)
         {
             Console.Write("🤔 What is your favorite number?: ");
             return int.Parse(Console.ReadLine());
         }
-        // 4. SquareNumber - Accepts an integer as a parameter and returns that number squared (as an integer)
+        
         static int SquareNumber(int number)
+        // 4. SquareNumber - Accepts an integer as a parameter and returns that number squared (as an integer)
         {
             return number * number;
         }
-        // 5. DisplayResult - Accepts the user's name and the squared number and displays them.
+        
         static void DisplayResult(string user_name, int squareNum)
+        // 5. DisplayResult - Accepts the user's name and the squared number and displays them.
         {
             Console.WriteLine($"\n{user_name}, the square of your number is {squareNum} 🤠\n");
         }
