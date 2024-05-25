@@ -1,4 +1,3 @@
-using System;
 // 1. In a new file, create the Square class.
 // 2. Make sure this class inherits from the base class.
 
@@ -18,5 +17,6 @@ public class Square : Shape
     {
         return _side * _side;
     }
+
 }
 // Return to the Main method in Program.cs to test your code.

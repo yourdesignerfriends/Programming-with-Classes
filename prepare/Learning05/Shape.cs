@@ -1,5 +1,3 @@
-using System;
-using System.Drawing;
 // 1. In a new file, create the Shape class (This will be the parent class)
 // public abstract class Shape
 

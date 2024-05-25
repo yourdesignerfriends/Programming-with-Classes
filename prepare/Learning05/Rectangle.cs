@@ -1,4 +1,3 @@
-using System;
 // In a new file, create the Rectangle class.
 // Make sure this class inherits from the base class.
 public class Rectangle : Shape
