@@ -1,3 +1,4 @@
+using System.Globalization;
 /*
 (Any data or methods that are common among all types of events should be in the base class)
 - Standard Details: Displays the title, description, date, time, and address.
@@ -11,7 +12,7 @@ public class Event
     //Attributes
     private string _tiltle;
     private string _description;
-    private string _date;
+    private DateTime _date;
     private string _time;
     private string _type;
     private Address _address = new();
@@ -49,21 +50,21 @@ public class Event
     private void SetDescription()
     {
         Console.WriteLine("");
-        Console.Write(" * Enter the description of the event\n  - ");
+        Console.Write(" * Enter the description of the event\n - ");
         _description = Console.ReadLine();
     }
 
     // Get Date
     public string GetDate()
     {
-        return _date;
+        return _date.ToString("MMMM, dd yyyy", CultureInfo.InvariantCulture);
     }
     // Set Date
     private void SetDate()
-    {  
+    {
         Console.WriteLine("");
-        Console.Write(" * What will be the date of the event?\n  - ");
-        _date = Console.ReadLine();
+        Console.Write(" * Enter a date in MM/dd/yyyy format (example 01/22/2024):\n  - ");
+        _date = DateTime.Parse(Console.ReadLine());
     }
 
     // Get Time
