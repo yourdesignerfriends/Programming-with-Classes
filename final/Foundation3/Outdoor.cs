@@ -5,12 +5,6 @@ public class Outdoor : Event
     //Attributes
     private string _weatherForcast;
 
-    // Set event name
-    public Outdoor()
-    {
-        SetEventType("3");
-    }
-
     // Get Weather Forecast
     public string GetWeatherForecast()
     {

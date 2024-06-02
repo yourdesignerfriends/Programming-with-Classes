@@ -5,12 +5,6 @@ public class Reception : Event
     //Attributes
     private string _email;
 
-    // Set event name
-    public Reception()
-    {
-        SetEventType("2");
-    }
-
     private void SetEmail()
     {
         Console.WriteLine("");

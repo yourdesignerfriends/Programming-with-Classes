@@ -6,11 +6,6 @@ public class Lectures : Event
     private string _speaker;
     private int _limitedCapacity;
 
-    // Set event name
-    public Lectures()
-    {
-        SetEventType("1");
-    }
     private void SetSpeakerName()
     {
         Console.WriteLine("");
