@@ -34,7 +34,7 @@ class Program
         string[] listOfEvents = {"⭐️ 1. Conferences", "⭐️ 2. Receptions", "⭐️ 3. Outdoors"};
         Console.WriteLine("");
         Console.WriteLine($"Which event would you like to plan:\n\n{listOfEvents[0]}\n{listOfEvents[1]}\n{listOfEvents[2]}\n");
-        string UserChoose = Console.ReadLine().ToLower();
+        string UserChoose = Console.ReadLine();
         Console.WriteLine("\nAwesome! Let's start creating your advertising 🤠 \n\nI will need some details, please read carefully and answer the following questions:");
 
         void FulldMessage()
