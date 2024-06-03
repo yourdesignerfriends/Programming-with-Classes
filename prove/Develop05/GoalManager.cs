@@ -19,7 +19,7 @@ public class GoalManager
     public void Start()
     {
         // This is the "main" function for this class. It is called by Program.cs, and then runs the menu loop.
-        string menuOptions = "\n   A. Create New Goal\n   B. List Goals\n   C. Save Goals\n   D. Load Goals\n   E. Record Event\n   F. Quit";
+        string menuOptions = "\n   A. Create New Goal\n   B. List Goals\n   C. Save Goals\n   D. Load Goals\n   E. Record Event\n   F. Quit\n   G. See Awards";
         
         bool startAgain = true;
         do
@@ -59,6 +59,10 @@ public class GoalManager
            {
                 DisplayFinalMessage();
                 break;
+           }
+           else if (option == "G")
+           {
+                DisplayPlayerAwards();
            }
 
         } while (startAgain);
@@ -156,6 +160,7 @@ public class GoalManager
         {
             saveGoals.WriteLine(goal.GetStringRepresentation());
         }
+        _goals.Clear();
 
         Console.WriteLine($"\nYour goals were successfully saved to the folder {fileName} 🙂."); 
     }
@@ -188,7 +193,7 @@ public class GoalManager
 
     //****************************************** E. Record Event **********************************************************
     private void RecordEvent()
-    /*A
+    /*
     Asks the user which goal they have done and then records the event by calling the RecordEvent method on that goal.
     This method should do whatever is necessary for each specific kind of goal:
         - Marking a simple goal complete 
@@ -391,13 +396,11 @@ public class GoalManager
 
     private  void DisplayPlayerAwards()
     {
-        Console.ForegroundColor = ConsoleColor.Yellow;
         Console.WriteLine($"\nYou have accumulated a total of {_score} points. Glory degrees based on your current score is:\n");
         int level = _score;
 
         if ((level >= 0) && (level <= 2000))
         {
-            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("The Glory of the Stars\n\n");
             Console.WriteLine("               ⬛⬛⬛");
             Console.WriteLine("              ⬛🟨🟨🟨⬛");
@@ -424,7 +427,6 @@ public class GoalManager
         }
         else if ((level > 2000) && (level <= 3000))
         {
-            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("The Glory of the Moon\n\n");
             Console.WriteLine("                          ⣤⣤⣤⣤⣤⣤⣤⣄⣀");
             Console.WriteLine("                             ⠛⠻⠿⢿⣿⣿⣿⣿⣿");
