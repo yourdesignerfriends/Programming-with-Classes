@@ -5,9 +5,3 @@ Simple Goal:
 ⏺️  Goal description: limpiar
 ⏺️  Goal value in points: 100
 ⏺️  Is Complete?: False
-
-Simple Goal:
-⏺️  Goal name: templo
-⏺️  Goal description: ir
-⏺️  Goal value in points: 50
-⏺️  Is Complete?: False

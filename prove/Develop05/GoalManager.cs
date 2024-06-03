@@ -20,8 +20,6 @@ public class GoalManager
     {
         // This is the "main" function for this class. It is called by Program.cs, and then runs the menu loop.
         Console.ForegroundColor = ConsoleColor.Yellow;
-        DisplayPlayerInfo();
-        Console.WriteLine("\nMenu Options:");
         string menuOptions = "\n   A. Create New Goal\n   B. List Goals\n   C. Save Goals\n   D. Load Goals\n   E. Record Event\n   F. Quit";
         
         bool startAgain = true;
@@ -29,6 +27,7 @@ public class GoalManager
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
             DisplayPlayerInfo();
+            Console.WriteLine("\nMenu Options:");
             Console.WriteLine(menuOptions);
             Console.Write("\nSelect a choice from the menu: ");
             string option = Console.ReadLine().ToUpper();
@@ -40,7 +39,7 @@ public class GoalManager
            else if (option == "B")
            {
                 Console.WriteLine("");
-                ListGoals();
+                ListGoalDetails();
            }
            else if (option == "C")
            {
@@ -61,21 +60,6 @@ public class GoalManager
            }
 
         } while (startAgain);
-    }
-
-    private  void DisplayPlayerInfo()
-    {
-        // DisplayPlayerInfo - Displays the players current score.
-        Console.WriteLine($"\nYou have {_score} points.");
-    }
-
-    private  void DisplayFinalMessage()
-    {
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.WriteLine("\nHave a day full of many successes, see you soon.\n\n\n");
-        Console.ForegroundColor = ConsoleColor.White;
-        AsciiArtFinalMessage();
-
     }
 
     //****************************************** CreateGoal **************************************************************
@@ -99,7 +83,7 @@ public class GoalManager
             SimpleGoal simpleGoal = new(name: SetGoalName(), description: SetGoalDescription(), points: SetGoalPoint(), goal: goalTypes[typeOfGoal]);
             // Add goal to the list.
             _goals.Add(simpleGoal);
-            CongratulationsCreateNewGoal();
+            MessageGoalCreate();
         }
         else if (typeOfGoal == 1)
         {
@@ -109,7 +93,7 @@ public class GoalManager
             EternalGoal eternalGoal = new (name: SetGoalName(), description: SetGoalDescription(), points: SetGoalPoint(), goal: goalTypes[typeOfGoal]);
             // Add goal to the list.
             _goals.Add(eternalGoal);
-            CongratulationsCreateNewGoal();
+            MessageGoalCreate();
         }
         else if (typeOfGoal == 2)
         {
@@ -119,15 +103,67 @@ public class GoalManager
             CheckListGoal checkListGoal = new(name: SetGoalName(), description: SetGoalDescription(), points: SetGoalPoint(), goal: goalTypes[typeOfGoal], target: SetCheckListCount(), bonus: SetBonusPoint());
             // Add goal to the list.
             _goals.Add(checkListGoal);
-            CongratulationsCreateNewGoal();
+            MessageGoalCreate();
         }
         else
         {
             Console.WriteLine("Follow the program instructions 🫡, remember there are only three types of Goals, you must select a correct option.");
+            GoCreateGoal();
         }
     }
 
+    //****************************************** B. List Goals ***************************************************************
+    private void ListGoalNames()
+    // Lists the names of each of the goals.
+    {
+        if (_goals.Count != 0)
+        {
+            foreach (Goal goal in _goals)
+            {
+                _count++;
+                Console.WriteLine($"{_count}. {goal.GetGoalName()}");
+            }
+            _count = 0;
+        }
+    }
+    private void ListGoalDetails()
+    // Lists the details of each goal (including the checkbox of whether it is complete).
+    {
+        if (_goals.Count != 0)
+        {
+            foreach (Goal goal in _goals)
+            {
+                _count++;
+                Console.WriteLine($"{_count}. {goal.GetDetailsString()}");
+            }
+            _count = 0;
+        }
+        else 
+        {
+            NoGoalsMessage();
+        }
+    }
 
+    //****************************************** C. Save Goals **********************************************************
+
+    private void SaveGoal()
+    {
+        // Saves the list of goals to a file.
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.Write("\nWhat is the filename for the goal file?: ");
+        string fileName = Console.ReadLine();
+
+        using StreamWriter saveGoals = new($"{_folderPath}{fileName}.txt");
+        saveGoals.WriteLine(_score);
+        foreach (Goal goal in _goals)
+        {
+            saveGoals.WriteLine(goal.GetStringRepresentation());
+        }
+
+        Console.WriteLine($"\nYour goals were successfully saved to the folder {fileName} 🙂."); 
+    }
+
+    //******************************************** Setters **************************************************************
     private string SetGoalName()
     {
         Console.ForegroundColor = ConsoleColor.Yellow;
@@ -149,63 +185,47 @@ public class GoalManager
         int _goalPoint = int.Parse(Console.ReadLine());
         return _goalPoint;
     }
-    private void CongratulationsCreateNewGoal()
+
+    //****************************************** Other functions ********************************************************
+    private  void DisplayFinalMessage()
     {
-        Console.WriteLine("\nCongratulations your goal has been successfully created.");
-        Console.WriteLine("\n------------------------------------------------------------------------------------------------");
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine("\nHave a day full of many successes, see you soon.\n\n\n");
+        Console.ForegroundColor = ConsoleColor.White;
+        AsciiArtFinalMessage();
     }
-        private void ListGoalNames()
+    private  void DisplayPlayerInfo()
     {
-
-    //****************************************** B. List Goals ***************************************************************
-    // ListGoalNames - Lists the names of each of the goals.
-        if (_goals.Count != 0)
-        {
-            foreach (Goal goal in _goals)
-            {
-                _count++;
-                Console.WriteLine($"{_count}. {goal.GetGoalName()}");
-            }
-            _count = 0;
-        }
-        else 
-        {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("\nI don't have any goals to show you.\n\nYou could... create new goals 🤠!");
-            Console.WriteLine("\nPress enter to start over 🙂\n");
-            Console.ReadKey();
-
-            Console.Clear();
-            GoalManager goalManager = new();
-            goalManager.Start();
-        }
+        // Displays the players current score.
+        Console.WriteLine($"\n⭐️ ------ You have {_score} points ------ ⭐️");
     }
-        private void ListGoalDetails()
-    //ListGoalDetails - Lists the details of each goal (including the checkbox of whether it is complete).
+    private void MessageGoalCreate()
     {
-        if (_goals.Count != 0)
-        {
-            foreach (Goal goal in _goals)
-            {
-                _count++;
-                Console.WriteLine($"{_count}. {goal.GetDetailsString()}");
-            }
-            _count = 0;
-        }
-        else 
-        {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("I don't have any goals to show you.\n\nYou could... create new goals 🤠!");
-            Console.WriteLine("\nPress enter to start over 🙂\n");
-            Console.ReadKey();
-
-            Console.Clear();
-            GoalManager goalManager = new();
-            goalManager.Start();
-        }
+        Console.WriteLine("\nYour goal has been successfully created\n");
+        Console.WriteLine(" 🔴 Remember to save your Goals before Quit the program by selecting Choice 'C' from the main menu 🔴");
+        Start();
     }
-
-    //****************************************** A. Create New Goal **************************************************************
+    private void NoGoalsMessage()
+    {
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine("I don't have any goals to show you.\n\nYou could... create new goals 🤠!");
+        GoMainMenu();
+    }
+    private void GoMainMenu()
+    {
+        Console.WriteLine("\n Please press enter to go to the main menu 🙂\n");
+        Console.ReadKey();
+        Console.Clear();
+        Start();
+    }
+    private void GoCreateGoal()
+    {
+        Console.WriteLine("\n Please press enter to go to the main menu 🙂\n");
+        Console.ReadKey();
+        Console.Clear();
+        CreateGoal();
+    }
+    //****************************************** Ascii Art **************************************************************
 
     private  void AsciiArtTypesOfGoals()
     {
@@ -342,13 +362,6 @@ public class GoalManager
         }
     }
 
-    // 4 method
-
-
-    // 5 method
-
-
-
     // 7 method   
     private void RecordEvent()
     // RecordEvent - Asks the user which goal they have done and then records the event by calling the RecordEvent method on that goal.
@@ -380,29 +393,10 @@ public class GoalManager
     }
 
     // 8 method
-    private void ListGoals()
-    {
-        ListGoalDetails();
-    }
+    
 
     // 9 method
-    private void SaveGoal()
-    {
-        // The proposal is to create a folder to save the goals (Saves the list of goals to a file.)
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.Write("\nWe are going to create a folder to save your goals, write below the name of the new folder you want to create:\n\n");
-        string fileName = Console.ReadLine();
 
-        using StreamWriter saveGoals = new($"{_folderPath}{fileName}.txt");
-        saveGoals.WriteLine(_score);
-        foreach (Goal goal in _goals)
-        {
-            saveGoals.WriteLine(goal.GetStringRepresentation());
-        }
-        _goals.Clear();
-        Console.WriteLine($"\nYour folder {fileName} has been created successfully 🙂.");
-        Console.WriteLine("\n------------------------------------------------------------------------------------------------\n");  
-    }
 
 
     // 10 method
@@ -430,17 +424,6 @@ public class GoalManager
         else Console.WriteLine("You have no goals saved in your folders at this time.");
     }
 
-
-    // 11 method
-
-
-    // 12 method
-    
-
-    // 13 method
-    
-    
-    // 14 method
     private int SetBonusPoint()
     {
         Console.ForegroundColor = ConsoleColor.Yellow;
