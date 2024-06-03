@@ -11,7 +11,6 @@ public class CheckListGoal : Goal
     private int _bonus;
     private bool _isComplete = false;
 
-    // 1 method
     public CheckListGoal(string name, string description, int points, string goal, int target, int bonus) : base(name, description, points)
     {
         _typeOfGoal = goal;
@@ -19,23 +18,21 @@ public class CheckListGoal : Goal
         _bonus = bonus;
     }
 
-    // 2 method
     public override void RecordEvent()
     {
         if (IsComplete() && GetAmountCompleted() == _target)
         {
-            AddSetPointToCurrentPoint();
+            AddPoint();
             SetCheckMark();
         }
         else
         {
-            AddSetPointToCurrentPoint();
+            AddPoint();
             SetAmountCompleted();
             _isComplete = false;
         }
     }
 
-    // 3 method
     public override bool IsComplete()
     /*
     IsComplete - This method should return true if the goal is completed. 
@@ -45,7 +42,6 @@ public class CheckListGoal : Goal
         return _isComplete;
     }
 
-    // 4 method
     public override string GetDetailsString()
     /*
     GetDetailsString - This method should return the details of a goal that could be shown in a list. 
@@ -56,35 +52,30 @@ public class CheckListGoal : Goal
         return $"{GetCheckMark()} {_shortName} * {_description} 👉 Progress status {GetAmountCompleted()} * {_target}";
     }
 
-    // 5 method
     public override string GetStringRepresentation()
     /*
     GetStringRepresentation - This method should provide all of the details of a goal in a way that is 
     easy to save to a file, and then load later.
     */
     {
-        return $"\n{_typeOfGoal}:\n⏺️  Goal name: {_shortName}\n⏺️  Goal description: {_description}\n⏺️  Goal value in points: {_points}\n⏺️  Number of times needed to complete the goal: {_bonus}\n⏺️  Bonus value in points: {_target}\n⏺️  Amount Completed: {GetAmountCompleted()}\n⏺️  Is Complete?: {IsComplete()}";
+        return $"\n{_typeOfGoal}:\nGoal name: {_shortName}\nGoal description: {_description}\nGoal value in points: {_points}\nNumber of times needed to complete the goal: {_bonus}\nBonus value in points: {_target}\nAmount Completed: {GetAmountCompleted()}\nIs Complete?: {IsComplete()}";
     }
 
-    // 6 method
     public void SetAmountCompleted()
     {
         _amountCompleted++;
     }
 
-    // 7 method
     public int GetAmountCompleted()
     {
         return _amountCompleted;
     }
 
-    // 8 method
     public override void SetIsCompleteToTrue()
     {
         _isComplete = true;
     }
 
-    // 9 method
     public void AddSaveAmountCompleted(int amount)
     {
         _amountCompleted = amount;

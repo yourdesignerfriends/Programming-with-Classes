@@ -19,13 +19,11 @@ public class GoalManager
     public void Start()
     {
         // This is the "main" function for this class. It is called by Program.cs, and then runs the menu loop.
-        Console.ForegroundColor = ConsoleColor.Yellow;
         string menuOptions = "\n   A. Create New Goal\n   B. List Goals\n   C. Save Goals\n   D. Load Goals\n   E. Record Event\n   F. Quit";
         
         bool startAgain = true;
         do
         {
-            Console.ForegroundColor = ConsoleColor.Yellow;
             DisplayPlayerInfo();
             Console.WriteLine("\nMenu Options:");
             Console.WriteLine(menuOptions);
@@ -34,6 +32,7 @@ public class GoalManager
 
             if (option == "A")
            {
+                Console.WriteLine("");
                 CreateGoal();
            }
            else if (option == "B")
@@ -43,14 +42,17 @@ public class GoalManager
            }
            else if (option == "C")
            {
+                Console.WriteLine("");
                 SaveGoal();
            }
            else if (option == "D")
            {
+                Console.WriteLine("");
                 LoadGoals();
            }
            else if (option == "E")
            {
+                Console.WriteLine("");
                 RecordEvent();
            }
            else if (option == "F")
@@ -62,12 +64,11 @@ public class GoalManager
         } while (startAgain);
     }
 
-    //****************************************** CreateGoal **************************************************************
+    //****************************************** A. Create New Goal **************************************************************
     private void CreateGoal()
     // Asks the user for the information about a new goal. Then, creates the goal and adds it to the list.
     {
         Console.Clear();
-        Console.ForegroundColor = ConsoleColor.Red;
         string[] goalTypes = {"Simple Goal", "Eternal Goals", "Checklist Goals"};
         AsciiArtTypesOfGoals();
         Console.WriteLine("\nThe types of Goals are:");
@@ -78,7 +79,6 @@ public class GoalManager
         if (typeOfGoal == 0)
         {
             Console.Clear();
-            Console.ForegroundColor = ConsoleColor.Red;
             AsciiArtSimpleGoal();
             SimpleGoal simpleGoal = new(name: SetGoalName(), description: SetGoalDescription(), points: SetGoalPoint(), goal: goalTypes[typeOfGoal]);
             // Add goal to the list.
@@ -88,7 +88,6 @@ public class GoalManager
         else if (typeOfGoal == 1)
         {
             Console.Clear();
-            Console.ForegroundColor = ConsoleColor.Red;
             AsciiArtEternalGoal();                                                                   
             EternalGoal eternalGoal = new (name: SetGoalName(), description: SetGoalDescription(), points: SetGoalPoint(), goal: goalTypes[typeOfGoal]);
             // Add goal to the list.
@@ -98,7 +97,6 @@ public class GoalManager
         else if (typeOfGoal == 2)
         {
             Console.Clear();
-            Console.ForegroundColor = ConsoleColor.Red;
             AsciiArtchecklistGoal();
             CheckListGoal checkListGoal = new(name: SetGoalName(), description: SetGoalDescription(), points: SetGoalPoint(), goal: goalTypes[typeOfGoal], target: SetCheckListCount(), bonus: SetBonusPoint());
             // Add goal to the list.
@@ -149,7 +147,6 @@ public class GoalManager
     private void SaveGoal()
     {
         // Saves the list of goals to a file.
-        Console.ForegroundColor = ConsoleColor.Yellow;
         Console.Write("\nWhat is the filename for the goal file?: ");
         string fileName = Console.ReadLine();
 
@@ -163,35 +160,94 @@ public class GoalManager
         Console.WriteLine($"\nYour goals were successfully saved to the folder {fileName} 🙂."); 
     }
 
+    //****************************************** D. Load Goals **********************************************************
+
+    private void LoadGoals()
+    // Loads the list of goals from a file.
+    {
+        string[] files = Directory.GetFiles(_folderPath);
+
+        if (files.Length != 0)
+        {
+            Console.WriteLine("\nHere you can see a list of your folders:\n");
+            foreach (string file in files)    
+            {
+                _count++;
+                Console.WriteLine($"{_count}. {Path.GetFileNameWithoutExtension(file)}");
+            }
+            _count = 0;
+
+            Console.Write("\nPlease enter the number of the folder you wish to load below:\n\n");
+            int choosenFile = int.Parse(Console.ReadLine());
+            string[] fileContent = File.ReadAllLines(files[choosenFile - 1]);
+
+            _goals.AddRange(GoalObjects(fileContent));
+        } 
+        else Console.WriteLine("You have no goals saved in your folders at this time.");
+    }
+
+    //****************************************** E. Record Event **********************************************************
+    private void RecordEvent()
+    /*A
+    Asks the user which goal they have done and then records the event by calling the RecordEvent method on that goal.
+    This method should do whatever is necessary for each specific kind of goal:
+        - Marking a simple goal complete 
+        - Adding to the number of times a checklist goal has been completed. 
+        - It should return the point value associated with recording 
+        - May contain a bonus in some cases if a checklist goal was just finished.
+    */
+    {
+        ListGoalNames();
+        Console.Write("\nWhich of the following Goal did you complete?:\n\n");
+        int goalCompleteIndex = int.Parse(Console.ReadLine());
+
+        Goal goalAccomplished = _goals[goalCompleteIndex - 1];
+        goalAccomplished.SetIsCompleteToTrue();
+        goalAccomplished.RecordEvent();
+        _score += goalAccomplished.GetCurrentPoint();
+
+        AsciiArtCongratulations();
+        Console.WriteLine($"------- 🎉 You have earned {goalAccomplished.GetSetPoint()} points!"); 
+        Console.WriteLine($"------- 🎊 You now have {_score} points.");   
+        Start();
+    }
+
     //******************************************** Setters **************************************************************
     private string SetGoalName()
     {
-        Console.ForegroundColor = ConsoleColor.Yellow;
         Console.Write("\nNow let's give this Goal a name 🥰, write the name you would like to give it\n - ");
         string _goalname = Console.ReadLine();
         return _goalname;
     }
     private string SetGoalDescription()
     {
-        Console.ForegroundColor = ConsoleColor.Yellow;
         Console.Write("\nWrite a short description of your goal\n - ");
         string _goalDescription = Console.ReadLine();
         return _goalDescription;
     }
     private int SetGoalPoint()
     {
-        Console.ForegroundColor = ConsoleColor.Yellow;
         Console.Write("\nEnter the amount of points you want to earn by completing this goal\n - ");
         int _goalPoint = int.Parse(Console.ReadLine());
         return _goalPoint;
+    }
+        private int SetBonusPoint()
+    {
+        Console.Write("\nHow about we assign some bonuses to this objective? Write below how many bonuses you would like to win: ");
+        int _bonusPoint = int.Parse(Console.ReadLine());
+        return _bonusPoint;
+    }
+    private int SetCheckListCount()
+    {
+        Console.Write("\nNow we are going to assign the number of times you need to complete this objective to finish it 🤠\nEnter below how many times you need to do this objective: ");
+        int _checklistCount = int.Parse(Console.ReadLine());
+        return _checklistCount;
     }
 
     //****************************************** Other functions ********************************************************
     private  void DisplayFinalMessage()
     {
-        Console.ForegroundColor = ConsoleColor.Yellow;
         Console.WriteLine("\nHave a day full of many successes, see you soon.\n\n\n");
-        Console.ForegroundColor = ConsoleColor.White;
         AsciiArtFinalMessage();
     }
     private  void DisplayPlayerInfo()
@@ -207,10 +263,10 @@ public class GoalManager
     }
     private void NoGoalsMessage()
     {
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.WriteLine("I don't have any goals to show you.\n\nYou could... create new goals 🤠!");
-        GoMainMenu();
+        Console.WriteLine("I don't have any goals to show you. You could:\n\n - Create new goals by selecting option 'A' from the main menu\n - Load your previous Goals by selecting option 'D' from the main menu");
+        Start();
     }
+    /*
     private void GoMainMenu()
     {
         Console.WriteLine("\n Please press enter to go to the main menu 🙂\n");
@@ -218,6 +274,7 @@ public class GoalManager
         Console.Clear();
         Start();
     }
+    */
     private void GoCreateGoal()
     {
         Console.WriteLine("\n Please press enter to go to the main menu 🙂\n");
@@ -225,10 +282,61 @@ public class GoalManager
         Console.Clear();
         CreateGoal();
     }
+    
+    private List<Goal> GoalObjects(string[] param)
+    {
+        _score = int.Parse(param[0]);
+        char colon = ':';
+        char pipe = '|';
+        int start = 1;
+        int end = param.Length;
+        param = param.Where((value, index) => index >= start && index <= end).ToArray();
+
+        List<Goal> initialGoal = new();
+
+        foreach (string list in param)
+        {
+            string[] parts = list.Split(colon);
+            string nameOfTheGoal = parts[0].Trim();
+            string[] contents = parts[1].Split(pipe);
+
+            if (nameOfTheGoal == "Simple Goal")
+            {
+                SimpleGoal simpleGoal = new(name: contents[0].Trim(), description: contents[1].Trim(), points: int.Parse(contents[2].Trim()), goal: nameOfTheGoal);
+                bool isComplete = bool.Parse(contents[3]);
+                if (isComplete) 
+                {
+                    simpleGoal.SetCheckMark();
+                    simpleGoal.SetIsCompleteToTrue();
+                }
+                initialGoal.Add(simpleGoal);
+            }
+            if (nameOfTheGoal == "Eternal Goals")
+            {
+                EternalGoal eternalGoal = new (name: contents[0].Trim(), description: contents[1].Trim(), points: int.Parse(contents[2].Trim()), goal: nameOfTheGoal);
+                initialGoal.Add(eternalGoal);
+            }
+            if (nameOfTheGoal == "Checklist Goals")
+            {
+                CheckListGoal checkListGoal = new(name: contents[0].Trim(), description: contents[1].Trim(), points: int.Parse(contents[2].Trim()), goal: nameOfTheGoal, bonus: int.Parse(contents[3].Trim()), target: int.Parse(contents[4].Trim()));
+                bool isComplete = bool.Parse(contents[6]);
+                if (isComplete)
+                {
+                    checkListGoal.SetCheckMark();
+                    checkListGoal.SetIsCompleteToTrue();
+                } 
+                checkListGoal.AddSaveAmountCompleted(int.Parse(contents[5].Trim()));
+                initialGoal.Add(checkListGoal);
+            }
+        }
+        Console.WriteLine("\nUpload complete 😎");
+        return initialGoal;
+    }
     //****************************************** Ascii Art **************************************************************
 
     private  void AsciiArtTypesOfGoals()
     {
+        Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine("\n\n████████ ██    ██ ██████  ███████ ███████      ██████  ███████      ██████   ██████   █████  ██      ███████");
         Console.WriteLine("   ██     ██  ██  ██   ██ ██      ██          ██    ██ ██          ██       ██    ██ ██   ██ ██      ██");      
         Console.WriteLine("   ██      ████   ██████  █████   ███████     ██    ██ █████       ██   ███ ██    ██ ███████ ██      ███████"); 
@@ -237,6 +345,7 @@ public class GoalManager
     }
     private  void AsciiArtSimpleGoal()
     {
+        Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine("\n\n███████ ██ ███    ███ ██████  ██      ███████      ██████   ██████   █████  ██");      
         Console.WriteLine("██      ██ ████  ████ ██   ██ ██      ██          ██       ██    ██ ██   ██ ██");      
         Console.WriteLine("███████ ██ ██ ████ ██ ██████  ██      █████       ██   ███ ██    ██ ███████ ██");      
@@ -245,6 +354,7 @@ public class GoalManager
     }
     private  void AsciiArtEternalGoal()
     {
+        Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine("\n\n███████ ████████ ███████ ██████  ███    ██  █████  ██           ██████   ██████   █████  ██");      
         Console.WriteLine("██         ██    ██      ██   ██ ████   ██ ██   ██ ██          ██       ██    ██ ██   ██ ██");      
         Console.WriteLine("█████      ██    █████   ██████  ██ ██  ██ ███████ ██          ██   ███ ██    ██ ███████ ██");      
@@ -253,14 +363,25 @@ public class GoalManager
     }
     private  void AsciiArtchecklistGoal()
     {
+        Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine("\n\n ██████ ██   ██ ███████  ██████ ██   ██     ██      ██ ███████ ████████      ██████   ██████   █████  ██");      
         Console.WriteLine("██      ██   ██ ██      ██      ██  ██      ██      ██ ██         ██        ██       ██    ██ ██   ██ ██");      
         Console.WriteLine("██      ███████ █████   ██      █████       ██      ██ ███████    ██        ██   ███ ██    ██ ███████ ██");      
         Console.WriteLine("██      ██   ██ ██      ██      ██  ██      ██      ██      ██    ██        ██    ██ ██    ██ ██   ██ ██");      
         Console.WriteLine(" ██████ ██   ██ ███████  ██████ ██   ██     ███████ ██ ███████    ██         ██████   ██████  ██   ██ ███████\n");
     }
+    private  void AsciiArtCongratulations()
+    {
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine("\n\n ██████  ██████  ███    ██  ██████  ██████   █████  ████████ ██    ██ ██       █████  ████████ ██  ██████  ███    ██ ███████"); 
+        Console.WriteLine("██      ██    ██ ████   ██ ██       ██   ██ ██   ██    ██    ██    ██ ██      ██   ██    ██    ██ ██    ██ ████   ██ ██");      
+        Console.WriteLine("██      ██    ██ ██ ██  ██ ██   ███ ██████  ███████    ██    ██    ██ ██      ███████    ██    ██ ██    ██ ██ ██  ██ ███████"); 
+        Console.WriteLine("██      ██    ██ ██  ██ ██ ██    ██ ██   ██ ██   ██    ██    ██    ██ ██      ██   ██    ██    ██ ██    ██ ██  ██ ██      ██"); 
+        Console.WriteLine(" ██████  ██████  ██   ████  ██████  ██   ██ ██   ██    ██     ██████  ███████ ██   ██    ██    ██  ██████  ██   ████ ███████\n\n"); 
+    }
     private  void AsciiArtFinalMessage()
     {
+        Console.ForegroundColor = ConsoleColor.White;
         Console.WriteLine("          ˚ ∧___∧   +        —̳͟͞͞💗");
         Console.WriteLine("           ( •‿• )つ  —̳͟͞͞ 💗         —̳͟͞͞💗 +");
         Console.WriteLine("           (つ   <                —̳͟͞͞💗");
@@ -268,8 +389,6 @@ public class GoalManager
         Console.WriteLine("           `し´\n\n\n\n");
     }
 
-
-    // 3 method
     private  void DisplayPlayerAwards()
     {
         Console.ForegroundColor = ConsoleColor.Yellow;
@@ -360,139 +479,5 @@ public class GoalManager
             Console.WriteLine("───────█░█───────█░█───────█░█───────");
             Console.WriteLine("───────▀▀────────▀█▀────────▀▀───────");
         }
-    }
-
-    // 7 method   
-    private void RecordEvent()
-    // RecordEvent - Asks the user which goal they have done and then records the event by calling the RecordEvent method on that goal.
-    /*
-    RecordEvent - This method should do whatever is necessary for each specific kind of goal, such as marking a simple goal complete 
-    and adding to the number of times a checklist goal has been completed. It should return the point value associated with recording 
-    the event (keep in mind that it may contain a bonus in some cases if a checklist goal was just finished, for example).
-    */
-    {
-        ListGoalNames();
-        Console.Write("\nWhich of the following goals did you complete?:\n\n");
-        int goalCompleteIndex = int.Parse(Console.ReadLine());
-
-        Goal goalAccomplished = _goals[goalCompleteIndex - 1];
-        goalAccomplished.SetIsCompleteToTrue();
-        goalAccomplished.RecordEvent();
-        _score += goalAccomplished.GetCurrentPoint();
-
-        Console.ForegroundColor = ConsoleColor.Red;
-        string congratMessage = $"\n ██████  ██████  ███    ██  ██████  ██████   █████  ████████ ██    ██ ██       █████  ████████ ██  ██████  ███    ██ ███████\n██      ██    ██ ████   ██ ██       ██   ██ ██   ██    ██    ██    ██ ██      ██   ██    ██    ██ ██    ██ ████   ██ ██\n██      ██    ██ ██ ██  ██ ██   ███ ██████  ███████    ██    ██    ██ ██      ███████    ██    ██ ██    ██ ██ ██  ██ ███████\n██      ██    ██ ██  ██ ██ ██    ██ ██   ██ ██   ██    ██    ██    ██ ██      ██   ██    ██    ██ ██    ██ ██  ██ ██      ██\n ██████  ██████  ██   ████  ██████  ██   ██ ██   ██    ██     ██████  ███████ ██   ██    ██    ██  ██████  ██   ████ ███████\n\n⏺️  You have obtained a total of: {goalAccomplished.GetSetPoint()} points\n⏺️  The total points you have accumulated is: {_score}\n\n";
-        Console.WriteLine(congratMessage);
-        DisplayPlayerInfo();
-        Console.WriteLine("\nPress enter to start over 🙂\n");
-        Console.ReadKey();
-
-        Console.Clear();
-        GoalManager goalManager = new();
-        goalManager.Start();
-    }
-
-    // 8 method
-    
-
-    // 9 method
-
-
-
-    // 10 method
-    private void LoadGoals()
-    // LoadGoals - Loads the list of goals from a file.
-    {
-        string[] files = Directory.GetFiles(_folderPath);
-
-        if (files.Length != 0)
-        {
-            Console.WriteLine("\nHere you can see a list of your folders:\n");
-            foreach (string file in files)    
-            {
-                _count++;
-                Console.WriteLine($"{_count}. {Path.GetFileNameWithoutExtension(file)}");
-            }
-            _count = 0;
-
-            Console.Write("\nPlease enter the number of the folder you wish to open below:\n\n");
-            int choosenFile = int.Parse(Console.ReadLine());
-            string[] fileContent = File.ReadAllLines(files[choosenFile - 1]);
-
-            _goals.AddRange(GoalObjects(fileContent));
-        } 
-        else Console.WriteLine("You have no goals saved in your folders at this time.");
-    }
-
-    private int SetBonusPoint()
-    {
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.Write("\nHow about we assign some bonuses to this objective? Write below how many bonuses you would like to win: ");
-        int _bonusPoint = int.Parse(Console.ReadLine());
-        return _bonusPoint;
-    }
-
-    // 15 method
-    private int SetCheckListCount()
-    {
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.Write("\nNow we are going to assign the number of times you need to complete this objective to finish it 🤠\nEnter below how many times you need to do this objective: ");
-        int _checklistCount = int.Parse(Console.ReadLine());
-        return _checklistCount;
-    }
-    
-    // 16 method
-    private List<Goal> GoalObjects(string[] param)
-    {
-        _score = int.Parse(param[0]);
-        char colon = ':';
-        char pipe = '|';
-        int start = 1;
-        int end = param.Length;
-        param = param.Where((value, index) => index >= start && index <= end).ToArray();
-
-        List<Goal> initialGoal = new();
-
-        foreach (string list in param)
-        {
-            string[] parts = list.Split(colon);
-            string nameOfTheGoal = parts[0].Trim();
-            string[] contents = parts[1].Split(pipe);
-
-            if (nameOfTheGoal == "Simple Goal")
-            {
-                SimpleGoal simpleGoal = new(name: contents[0].Trim(), description: contents[1].Trim(), points: int.Parse(contents[2].Trim()), goal: nameOfTheGoal);
-                bool isComplete = bool.Parse(contents[3]);
-                if (isComplete) 
-                {
-                    simpleGoal.SetCheckMark();
-                    simpleGoal.SetIsCompleteToTrue();
-                }
-                initialGoal.Add(simpleGoal);
-            }
-            if (nameOfTheGoal == "Eternal Goals")
-            {
-                EternalGoal eternalGoal = new (name: contents[0].Trim(), description: contents[1].Trim(), points: int.Parse(contents[2].Trim()), goal: nameOfTheGoal);
-                initialGoal.Add(eternalGoal);
-            }
-            if (nameOfTheGoal == "Checklist Goals")
-            {
-                CheckListGoal checkListGoal = new(name: contents[0].Trim(), description: contents[1].Trim(), points: int.Parse(contents[2].Trim()), goal: nameOfTheGoal, bonus: int.Parse(contents[3].Trim()), target: int.Parse(contents[4].Trim()));
-                bool isComplete = bool.Parse(contents[6]);
-                if (isComplete)
-                {
-                    checkListGoal.SetCheckMark();
-                    checkListGoal.SetIsCompleteToTrue();
-                } 
-                checkListGoal.AddSaveAmountCompleted(int.Parse(contents[5].Trim()));
-                initialGoal.Add(checkListGoal);
-            }
-        }
-        Console.WriteLine("\nUpload complete 😎");
-        return initialGoal;
-
-        // List of methods containing Ascii art
-        
-
     }
 }

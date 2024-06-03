@@ -12,7 +12,6 @@ public  abstract class Goal
     protected int _currentPoint = 0;
     protected string _checkBox = "[ ]";
 
-    // 1 method
     public Goal (string name, string description, int points)
     {
         _shortName = name;
@@ -20,24 +19,34 @@ public  abstract class Goal
         _points = points;
     }
 
-    // 2 method
     public abstract void RecordEvent();
 
-    // 3 method
-    /*
-    IsComplete - This method should return true if the goal is completed. 
-    The way you determine if a goal is complete is different for each type of goal.
-    */
     public abstract bool IsComplete();
-    
+    // This method should return true if the goal is completed.
+    // The way you determine if a goal is complete is different for each type of goal.
 
-    // 4 method
-    public virtual void SetIsCompleteToTrue()
+    public void AddPoint()
+    // Calculation to add the points obtained to the total.
     {
-        
+        _currentPoint += _points;
     }
 
-    // 5 method
+    //******************************************** Getters and Setters **************************************************************
+    // Get Check Mark
+    public string GetCheckMark()
+    {
+        return _checkBox;
+    }
+    // Set Check Mark
+    public void SetCheckMark()
+    {
+        string newCheckBox = _checkBox.Replace(_checkBox, "[X]");
+        _checkBox = newCheckBox;
+    }
+
+    public abstract string GetStringRepresentation();
+    // This method should provide all of the details of a goal in a way that is easy to save to a file, and then load later.
+
     public virtual string GetDetailsString()
     /*
     GetDetailsString - This method should return the details of a goal that could be shown in a list. 
@@ -45,50 +54,25 @@ public  abstract class Goal
     it should be overridden to shown the number of times the goal has been accomplished so far.
     */
     {
-        return $"{GetCheckMark()} {_shortName} - {_description}";
+        return $"{GetCheckMark()} {_shortName} ({_description})";
     }
-
-    // 6 method
-    public abstract string GetStringRepresentation();
-    /*
-    GetStringRepresentation - This method should provide all of the details of a goal in a way that is 
-    easy to save to a file, and then load later.
-    */
-
-    // 7 method
+    
     public int GetCurrentPoint()
     {
         return _currentPoint;
     }
 
-    // 8 method
     public string GetGoalName()
     {
         return _shortName;
     }
 
-    // 9 method
     public int GetSetPoint()
     {
         return _points;
     }
+    public virtual void SetIsCompleteToTrue()
+    {    
 
-    // 10 method
-    public void AddSetPointToCurrentPoint()
-    {
-        _currentPoint += _points;
-    }
-
-    // 11 method
-    public void SetCheckMark()
-    {
-        string newCheckBox = _checkBox.Replace(_checkBox, "[X]");
-        _checkBox = newCheckBox;
-    }
-
-    // 12 method
-    public string GetCheckMark()
-    {
-        return _checkBox;
     }
 }
