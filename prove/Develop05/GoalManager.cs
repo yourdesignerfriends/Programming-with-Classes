@@ -137,20 +137,6 @@ public class GoalManager
             NoGoalsMessage();
         }
     }
-    private void ListGoalNames()
-    // Lists the names of each of the goals.
-    {
-        if (_goals.Count != 0)
-        {
-            foreach (Goal goal in _goals)
-            {
-                _count++;
-                Console.WriteLine($"{_count}. {goal.GetGoalName()}");
-            }
-            _count = 0;
-        }
-    }
-
     //****************************************** C. Save Goals **********************************************************
 
     private void SaveGoal()
@@ -291,6 +277,23 @@ public class GoalManager
         Start();
     }
     */
+    private void ListGoalNames()
+    // Lists the names of each of the goals.
+    {
+        if (_goals.Count != 0)
+        {
+            foreach (Goal goal in _goals)
+            {
+                _count++;
+                Console.WriteLine($"{_count}. {goal.GetGoalName()}");
+            }
+            _count = 0;
+        }
+        else 
+        {
+            NoGoalsMessage();
+        }
+    }
     private void GoCreateGoal()
     {
         Console.WriteLine("\n Please press enter to go to the main menu 🙂\n");
