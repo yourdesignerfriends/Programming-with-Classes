@@ -22,7 +22,11 @@ public class EternalGoal : Goal
     }
 
     public override void RecordEvent()
-    // Add the points obtained to the total.
+    /*
+    This method should do whatever is necessary for each specific kind of goal:
+    - It should return the point value associated with recording 
+    - Does not receive a check mark since the goal is eternal
+    */
     {
         if (IsComplete())
         {

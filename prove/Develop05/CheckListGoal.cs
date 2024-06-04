@@ -19,6 +19,13 @@ public class CheckListGoal : Goal
     }
 
     public override void RecordEvent()
+    /*
+    This method should do whatever is necessary for each specific kind of goal:
+        - Marking a CheckList Goal goal complete 
+        - Adding to the number of times a checklist goal has been completed. 
+        - It should return the point value associated with recording 
+        - May contain a bonus in some cases if a checklist goal was just finished.
+    */
     {
         if (IsComplete() && GetAmountCompleted() == _targetQuantity)
         {
@@ -33,6 +40,7 @@ public class CheckListGoal : Goal
         }
     }
 
+    // *********************** Achieve the desired amount, they get an extra bonus *****************
     public override bool IsComplete()
     /*
     IsComplete - This method should return true if the goal is completed. 
@@ -42,20 +50,25 @@ public class CheckListGoal : Goal
         return _isComplete;
     }
 
+        public override void SetIsCompleteToTrue()
+    {
+        _isComplete = true;
+    }
+
     public int GetAmountCompleted()
     {
         return _amountCompleted;
     }
-    
-    public void AddAmountCompleted(int amount)
-    {
-        _amountCompleted = amount;
-    }
-    public void SetAmountCompleted()
+     public void SetAmountCompleted()
     {
         // x = x + 1 (value of x before it was incremented)
         _amountCompleted++;
     }
+
+    public void AddAmountCompleted(int amount)
+    {
+        _amountCompleted = amount;
+    }  
 
     public override string GetDetailsString()
     /*
@@ -76,8 +89,5 @@ public class CheckListGoal : Goal
         return $"{_typeOfGoal}: {_shortName} , {_description} , {_points} , {_bonus} , {_targetQuantity} , {GetAmountCompleted()} , {IsComplete()}";
     }
 
-    public override void SetIsCompleteToTrue()
-    {
-        _isComplete = true;
-    }
+
 }

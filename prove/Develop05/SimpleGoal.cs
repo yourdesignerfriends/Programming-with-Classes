@@ -27,6 +27,11 @@ public class SimpleGoal : Goal
     }
 
     public override void RecordEvent()
+    /*
+    This method should do whatever is necessary for each specific kind of goal:
+    - Marking a simple goal complete 
+    - It should return the point value associated with recording 
+    */
     {
         if (IsComplete())
         {
