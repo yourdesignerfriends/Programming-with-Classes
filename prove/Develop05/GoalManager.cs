@@ -206,7 +206,7 @@ public class GoalManager
         Goal goalAccomplished = _goals[goalCompleteIndex - 1];
         goalAccomplished.SetIsCompleteToTrue();
         goalAccomplished.RecordEvent();
-        _score += goalAccomplished.GetCurrentPoint();
+        _score += goalAccomplished.GetSetPoint();
 
         Console.Clear();
         AsciiArtCongratulations();
