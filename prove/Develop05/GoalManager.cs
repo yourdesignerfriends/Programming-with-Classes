@@ -11,7 +11,7 @@ LoadGoals - Loads the list of goals from a file.
 public class GoalManager
 {
     // Attributes
-    private List<Goal> _goals = [];
+    private List<Goal> _goals = new ();
     private int _score;
     private int _count = 0;
     private string _folderPath = "GoalFolder/";
@@ -73,17 +73,18 @@ public class GoalManager
     // Asks the user for the information about a new goal. Then, creates the goal and adds it to the list.
     {
         Console.Clear();
-        string[] goalTypes = {"Simple Goal", "Eternal Goals", "Checklist Goals"};
         AsciiArtTypesOfGoals();
-        Console.WriteLine("\nThe types of Goals are:");
-        Console.WriteLine($"\n   1. {goalTypes[0]}: (Are those that can be accomplished in a week or two)\n\n   2. {goalTypes[1]}: (The most important goals in life that will give you joy as you fulfill your mission on this earth.)\n\n   3. {goalTypes[2]}: (goal that must be accomplished a certain number of times to be complete.)\n");
-        Console.Write("Which type of goal would you like to create? ");
+        string[] goalTypes = {"Simple Goal", "Eternal Goals", "Checklist Goals"};
+        Console.WriteLine($"\nThe types of Goals are:\n\n   1. {goalTypes[0]}\n   2. {goalTypes[1]}\n   3. {goalTypes[2]}");
+        //Console.WriteLine($"\nThe types of Goals are:  1. {goalTypes[0]} (Are those that can be accomplished in a week or two)\n\n | 2. {goalTypes[1]}: (The most important goals in life that will give you joy as you fulfill your mission on this earth.)\n\n   3. {goalTypes[2]}: (goal that must be accomplished a certain number of times to be complete.)\n");
+        Console.Write("\nWhich type of goal would you like to create? ");
         int typeOfGoal = int.Parse(Console.ReadLine()) - 1;
 
         if (typeOfGoal == 0)
         {
             Console.Clear();
             AsciiArtSimpleGoal();
+            Console.WriteLine("Simple goals are those that you can achieve once you have done them and they will be marked as completed\nFor example: Give a Talk");
             SimpleGoal simpleGoal = new(name: SetGoalName(), description: SetGoalDescription(), points: SetGoalPoint(), goal: goalTypes[typeOfGoal]);
             // Add goal to the list.
             _goals.Add(simpleGoal);
@@ -92,7 +93,8 @@ public class GoalManager
         else if (typeOfGoal == 1)
         {
             Console.Clear();
-            AsciiArtEternalGoal();                                                                   
+            AsciiArtEternalGoal();
+            Console.WriteLine("Eternal goals are those that will not be marked as completed since we must complete them forever\nFor example: Studying the scriptures");                                                                   
             EternalGoal eternalGoal = new (name: SetGoalName(), description: SetGoalDescription(), points: SetGoalPoint(), goal: goalTypes[typeOfGoal]);
             // Add goal to the list.
             _goals.Add(eternalGoal);
@@ -102,6 +104,7 @@ public class GoalManager
         {
             Console.Clear();
             AsciiArtchecklistGoal();
+            Console.WriteLine("The Checklist Goals are those that we must do a certain number of times to mark them as completed\nFor example: Go to the Temple 3 times");
             CheckListGoal checkListGoal = new(name: SetGoalName(), description: SetGoalDescription(), points: SetGoalPoint(), goal: goalTypes[typeOfGoal], target: SetCheckListCount(), bonus: SetBonusPoint());
             // Add goal to the list.
             _goals.Add(checkListGoal);
@@ -151,7 +154,7 @@ public class GoalManager
     private void SaveGoal()
     {
         // Saves the list of goals to a file.
-        Console.Write("\nWhat is the filename for the goal file?: ");
+        Console.Write("What is the filename for the goal file?: ");
         string fileName = Console.ReadLine();
 
         using StreamWriter saveGoals = new($"{_folderPath}{fileName}.txt");
@@ -174,7 +177,7 @@ public class GoalManager
 
         if (files.Length != 0)
         {
-            Console.WriteLine("\nHere you can see a list of your folders:\n");
+            Console.WriteLine("Here you can see a list of your folders:\n");
             foreach (string file in files)    
             {
                 _count++;

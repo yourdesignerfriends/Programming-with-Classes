@@ -49,7 +49,7 @@ public class CheckListGoal : Goal
     it should be overridden to shown the number of times the goal has been accomplished so far.
     */
     {
-        return $"{GetCheckMark()} {_shortName} * {_description} 👉 Progress status {GetAmountCompleted()} * {_target}";
+        return $"{GetCheckMark()} {_shortName} - {_description} -- Progress status {GetAmountCompleted()} / {_target}";
     }
 
     public override string GetStringRepresentation()
@@ -58,7 +58,7 @@ public class CheckListGoal : Goal
     easy to save to a file, and then load later.
     */
     {
-        return $"\n{_typeOfGoal}:\nGoal name: {_shortName}\nGoal description: {_description}\nGoal value in points: {_points}\nNumber of times needed to complete the goal: {_bonus}\nBonus value in points: {_target}\nAmount Completed: {GetAmountCompleted()}\nIs Complete?: {IsComplete()}";
+        return $"{_typeOfGoal}: {_shortName} | {_description} | {_points} | {_bonus} | {_target} | {GetAmountCompleted()} | {IsComplete()}";
     }
 
     public void SetAmountCompleted()

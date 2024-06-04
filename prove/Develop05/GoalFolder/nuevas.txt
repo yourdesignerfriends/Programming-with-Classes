@@ -1,7 +1,0 @@
-0
-
-Simple Goal:
-Goal name: casa
-Goal description: limpiar
-Goal value in points: 100
-Is Complete?: False

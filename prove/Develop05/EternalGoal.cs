@@ -36,7 +36,7 @@ public class EternalGoal : Goal
     easy to save to a file, and then load later.
     */
     {
-        return $"\n{_typeOfGoal}:\nGoal name: {_shortName}\nGoal description: {_description}\nGoal value in points: {_points}\nIs Complete?: {IsComplete()}";
+        return $"{_typeOfGoal}: {_shortName} | {_description} | {_points}";
     }
 
 
