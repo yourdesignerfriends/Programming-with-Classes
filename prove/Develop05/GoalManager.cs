@@ -105,7 +105,7 @@ public class GoalManager
             Console.Clear();
             AsciiArtchecklistGoal();
             Console.WriteLine("The Checklist Goals are those that we must do a certain number of times to mark them as completed\nFor example: Go to the Temple 3 times");
-            CheckListGoal checkListGoal = new(name: SetGoalName(), description: SetGoalDescription(), points: SetGoalPoint(), goal: goalTypes[typeOfGoal], targetQuantity: SetCheckListCount(), bonus: SetBonusPoint());
+            CheckListGoal checkListGoal = new(name: SetGoalName(), description: SetGoalDescription(), points: SetGoalPoint(), goal: goalTypes[typeOfGoal], targetQuantity: NeededTimes(), bonus: SetBonusPoint());
             // Add goal to the list.
             _goals.Add(checkListGoal);
             MessageGoalCreate();
@@ -240,11 +240,11 @@ public class GoalManager
         int _bonusPoint = int.Parse(Console.ReadLine());
         return _bonusPoint;
     }
-    private int SetCheckListCount()
+    private int NeededTimes()
     {
         Console.Write("\nNow we are going to assign the number of times you need to complete this Goal to finish it 🤠\nEnter below how many times you need to do this Goal: ");
-        int _checklistCount = int.Parse(Console.ReadLine());
-        return _checklistCount;
+        int NeededTimes = int.Parse(Console.ReadLine());
+        return NeededTimes;
     }
 
     //****************************************** Other functions ********************************************************

@@ -70,6 +70,7 @@ public  abstract class Goal
     {
         return _points;
     }
+    
     public virtual void SetIsCompleteToTrue()
     {    
 

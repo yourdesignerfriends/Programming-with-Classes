@@ -27,18 +27,27 @@ public class CheckListGoal : Goal
         - May contain a bonus in some cases if a checklist goal was just finished.
     */
     {
-        if (IsComplete() && GetAmountCompleted() == _targetQuantity)
+        // && AND (result is true if both expressions are true)
+        if (IsComplete() && (GetAmountCompleted() + 1 == _targetQuantity))
         {
-            AddPoint();
+            AddPointBonus();
+            SetAmountCompleted();
             SetCheckMark();
         }
         else
         {
+            // Marking it is not added because it is not complete but you still get points without bonus
             AddPoint();
             SetAmountCompleted();
             _isComplete = false;
         }
     }
+    public void AddPointBonus()
+    // Calculation to add the points obtained to the total.
+    {
+        _currentPoint += _points += _bonus;
+    }
+
 
     // *********************** Achieve the desired amount, they get an extra bonus *****************
     public override bool IsComplete()
@@ -50,7 +59,7 @@ public class CheckListGoal : Goal
         return _isComplete;
     }
 
-        public override void SetIsCompleteToTrue()
+    public override void SetIsCompleteToTrue()
     {
         _isComplete = true;
     }
@@ -59,16 +68,16 @@ public class CheckListGoal : Goal
     {
         return _amountCompleted;
     }
-     public void SetAmountCompleted()
+    public void SetAmountCompleted()
     {
         // x = x + 1 (value of x before it was incremented)
-        _amountCompleted++;
+        _amountCompleted ++;
     }
 
     public void AddAmountCompleted(int amount)
     {
         _amountCompleted = amount;
-    }  
+    }
 
     public override string GetDetailsString()
     /*

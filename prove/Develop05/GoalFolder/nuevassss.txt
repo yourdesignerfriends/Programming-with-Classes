@@ -1,0 +1,2 @@
+40
+Checklist Goals: casa , limpiar , 10 , 1 , 2 , 2 , True
