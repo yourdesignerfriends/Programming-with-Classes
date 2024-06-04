@@ -118,22 +118,11 @@ public class GoalManager
     }
 
     //****************************************** B. List Goals ***************************************************************
-    private void ListGoalNames()
-    // Lists the names of each of the goals.
-    {
-        if (_goals.Count != 0)
-        {
-            foreach (Goal goal in _goals)
-            {
-                _count++;
-                Console.WriteLine($"{_count}. {goal.GetGoalName()}");
-            }
-            _count = 0;
-        }
-    }
     private void ListGoalDetails()
     // Lists the details of each goal (including the checkbox of whether it is complete).
     {
+        Console.Clear();
+        AsciiArtListGoals();
         if (_goals.Count != 0)
         {
             foreach (Goal goal in _goals)
@@ -148,12 +137,27 @@ public class GoalManager
             NoGoalsMessage();
         }
     }
+    private void ListGoalNames()
+    // Lists the names of each of the goals.
+    {
+        if (_goals.Count != 0)
+        {
+            foreach (Goal goal in _goals)
+            {
+                _count++;
+                Console.WriteLine($"{_count}. {goal.GetGoalName()}");
+            }
+            _count = 0;
+        }
+    }
 
     //****************************************** C. Save Goals **********************************************************
 
     private void SaveGoal()
     {
         // Saves the list of goals to a file.
+        Console.Clear();
+        AsciiArtSaveGoals();
         Console.Write("What is the filename for the goal file?: ");
         string fileName = Console.ReadLine();
 
@@ -173,6 +177,8 @@ public class GoalManager
     private void LoadGoals()
     // Loads the list of goals from a file.
     {
+        Console.Clear();
+        AsciiArtLoadGoals();
         string[] files = Directory.GetFiles(_folderPath);
 
         if (files.Length != 0)
@@ -205,6 +211,8 @@ public class GoalManager
         - May contain a bonus in some cases if a checklist goal was just finished.
     */
     {
+        Console.Clear();
+        AsciiArtRecordEvent();
         ListGoalNames();
         Console.Write("\nWhich of the following Goal did you complete?:\n\n");
         int goalCompleteIndex = int.Parse(Console.ReadLine());
@@ -387,6 +395,44 @@ public class GoalManager
         Console.WriteLine("██      ██    ██ ██  ██ ██ ██    ██ ██   ██ ██   ██    ██    ██    ██ ██      ██   ██    ██    ██ ██    ██ ██  ██ ██      ██"); 
         Console.WriteLine(" ██████  ██████  ██   ████  ██████  ██   ██ ██   ██    ██     ██████  ███████ ██   ██    ██    ██  ██████  ██   ████ ███████\n\n"); 
     }
+    private  void AsciiArtListGoals()
+    {
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine("\n\n██      ██ ███████ ████████      ██████   ██████   █████  ██      ███████");
+        Console.WriteLine("██      ██ ██         ██        ██       ██    ██ ██   ██ ██      ██");      
+        Console.WriteLine("██      ██ ███████    ██        ██   ███ ██    ██ ███████ ██      ███████");
+        Console.WriteLine("██      ██      ██    ██        ██    ██ ██    ██ ██   ██ ██           ██"); 
+        Console.WriteLine("███████ ██ ███████    ██         ██████   ██████  ██   ██ ███████ ███████\n\n"); 
+    }
+    private  void AsciiArtSaveGoals()
+    {
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine("\n\n███████  █████  ██    ██ ███████      ██████   ██████   █████  ██      ███████"); 
+        Console.WriteLine("██      ██   ██ ██    ██ ██          ██       ██    ██ ██   ██ ██      ██");      
+        Console.WriteLine("███████ ███████ ██    ██ █████       ██   ███ ██    ██ ███████ ██      ███████"); 
+        Console.WriteLine("     ██ ██   ██  ██  ██  ██          ██    ██ ██    ██ ██   ██ ██           ██"); 
+        Console.WriteLine("███████ ██   ██   ████   ███████      ██████   ██████  ██   ██ ███████ ███████"); 
+    }
+    private  void AsciiArtLoadGoals()
+    {
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine("\n\n██       ██████   █████  ██████       ██████   ██████   █████  ██      ███████"); 
+        Console.WriteLine("██      ██    ██ ██   ██ ██   ██     ██       ██    ██ ██   ██ ██      ██");      
+        Console.WriteLine("██      ██    ██ ███████ ██   ██     ██   ███ ██    ██ ███████ ██      ███████"); 
+        Console.WriteLine("██      ██    ██ ██   ██ ██   ██     ██    ██ ██    ██ ██   ██ ██           ██"); 
+        Console.WriteLine("███████  ██████  ██   ██ ██████       ██████   ██████  ██   ██ ███████ ███████\n\n"); 
+    }
+    private  void AsciiArtRecordEvent()
+    {
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine("\n\n██████  ███████  ██████  ██████  ██████  ██████      ███████ ██    ██ ███████ ███    ██ ████████");
+        Console.WriteLine("██   ██ ██      ██      ██    ██ ██   ██ ██   ██     ██      ██    ██ ██      ████   ██    ██");    
+        Console.WriteLine("██████  █████   ██      ██    ██ ██████  ██   ██     █████   ██    ██ █████   ██ ██  ██    ██");   
+        Console.WriteLine("██   ██ ██      ██      ██    ██ ██   ██ ██   ██     ██       ██  ██  ██      ██  ██ ██    ██");    
+        Console.WriteLine("██   ██ ███████  ██████  ██████  ██   ██ ██████      ███████   ████   ███████ ██   ████    ██\n");    
+    }                                                                          
+                                                                               
+
     private  void AsciiArtFinalMessage()
     {
         Console.ForegroundColor = ConsoleColor.White;
