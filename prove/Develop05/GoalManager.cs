@@ -269,15 +269,6 @@ public class GoalManager
         Console.WriteLine("I don't have any goals to show you. You could:\n\n - Create new goals by selecting option 'A' from the main menu\n - Load your previous Goals by selecting option 'D' from the main menu");
         Start();
     }
-    /*
-    private void GoMainMenu()
-    {
-        Console.WriteLine("\n Please press enter to go to the main menu 🙂\n");
-        Console.ReadKey();
-        Console.Clear();
-        Start();
-    }
-    */
     private void ListGoalNames()
     // Lists the names of each of the goals.
     {
