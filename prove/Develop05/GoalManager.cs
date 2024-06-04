@@ -200,7 +200,7 @@ public class GoalManager
         Console.Clear();
         AsciiArtRecordEvent();
         ListGoalNames();
-        Console.Write("Which of the following Goal did you complete?:\n\n");
+        Console.Write("\nWhich of the following Goal did you complete?: ");
         int goalCompleteIndex = int.Parse(Console.ReadLine());
 
         Goal goalAccomplished = _goals[goalCompleteIndex - 1];
