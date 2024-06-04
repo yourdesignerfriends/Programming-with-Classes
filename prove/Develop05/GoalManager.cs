@@ -75,7 +75,7 @@ public class GoalManager
         Console.Clear();
         AsciiArtTypesOfGoals();
         string[] goalTypes = {"Simple Goal", "Eternal Goals", "Checklist Goals"};
-        Console.WriteLine($"\nThe types of Goals are:\n\n   1. {goalTypes[0]}\n   2. {goalTypes[1]}\n   3. {goalTypes[2]}");
+        Console.WriteLine($"The types of Goals are:\n\n   1. {goalTypes[0]}\n   2. {goalTypes[1]}\n   3. {goalTypes[2]}");
         //Console.WriteLine($"\nThe types of Goals are:  1. {goalTypes[0]} (Are those that can be accomplished in a week or two)\n\n | 2. {goalTypes[1]}: (The most important goals in life that will give you joy as you fulfill your mission on this earth.)\n\n   3. {goalTypes[2]}: (goal that must be accomplished a certain number of times to be complete.)\n");
         Console.Write("\nWhich type of goal would you like to create? ");
         int typeOfGoal = int.Parse(Console.ReadLine()) - 1;
@@ -105,7 +105,7 @@ public class GoalManager
             Console.Clear();
             AsciiArtchecklistGoal();
             Console.WriteLine("The Checklist Goals are those that we must do a certain number of times to mark them as completed\nFor example: Go to the Temple 3 times");
-            CheckListGoal checkListGoal = new(name: SetGoalName(), description: SetGoalDescription(), points: SetGoalPoint(), goal: goalTypes[typeOfGoal], target: SetCheckListCount(), bonus: SetBonusPoint());
+            CheckListGoal checkListGoal = new(name: SetGoalName(), description: SetGoalDescription(), points: SetGoalPoint(), goal: goalTypes[typeOfGoal], targetQuantity: SetCheckListCount(), bonus: SetBonusPoint());
             // Add goal to the list.
             _goals.Add(checkListGoal);
             MessageGoalCreate();
@@ -200,7 +200,7 @@ public class GoalManager
         Console.Clear();
         AsciiArtRecordEvent();
         ListGoalNames();
-        Console.Write("\nWhich of the following Goal did you complete?:\n\n");
+        Console.Write("Which of the following Goal did you complete?:\n\n");
         int goalCompleteIndex = int.Parse(Console.ReadLine());
 
         Goal goalAccomplished = _goals[goalCompleteIndex - 1];
@@ -208,6 +208,7 @@ public class GoalManager
         goalAccomplished.RecordEvent();
         _score += goalAccomplished.GetCurrentPoint();
 
+        Console.Clear();
         AsciiArtCongratulations();
         Console.WriteLine($"------- 🎉 You have earned {goalAccomplished.GetSetPoint()} points!"); 
         Console.WriteLine($"------- 🎊 You now have {_score} points.");   
@@ -235,13 +236,13 @@ public class GoalManager
     }
         private int SetBonusPoint()
     {
-        Console.Write("\nHow about we assign some bonuses to this objective? Write below how many bonuses you would like to win: ");
+        Console.Write("\nHow about we assign some bonuses to this Goal? Write below how many bonuses you would like to win: ");
         int _bonusPoint = int.Parse(Console.ReadLine());
         return _bonusPoint;
     }
     private int SetCheckListCount()
     {
-        Console.Write("\nNow we are going to assign the number of times you need to complete this objective to finish it 🤠\nEnter below how many times you need to do this objective: ");
+        Console.Write("\nNow we are going to assign the number of times you need to complete this Goal to finish it 🤠\nEnter below how many times you need to do this Goal: ");
         int _checklistCount = int.Parse(Console.ReadLine());
         return _checklistCount;
     }
@@ -306,7 +307,7 @@ public class GoalManager
     {
         _score = int.Parse(param[0]);
         char colon = ':';
-        char pipe = '|';
+        char pipe = ',';
         int start = 1;
         int end = param.Length;
         param = param.Where((value, index) => index >= start && index <= end).ToArray();
@@ -337,7 +338,7 @@ public class GoalManager
             }
             if (nameOfTheGoal == "Checklist Goals")
             {
-                CheckListGoal checkListGoal = new(name: contents[0].Trim(), description: contents[1].Trim(), points: int.Parse(contents[2].Trim()), goal: nameOfTheGoal, bonus: int.Parse(contents[3].Trim()), target: int.Parse(contents[4].Trim()));
+                CheckListGoal checkListGoal = new(name: contents[0].Trim(), description: contents[1].Trim(), points: int.Parse(contents[2].Trim()), goal: nameOfTheGoal, bonus: int.Parse(contents[3].Trim()), targetQuantity: int.Parse(contents[4].Trim()));
                 bool isComplete = bool.Parse(contents[6]);
                 if (isComplete)
                 {
@@ -360,7 +361,7 @@ public class GoalManager
         Console.WriteLine("   ██     ██  ██  ██   ██ ██      ██          ██    ██ ██          ██       ██    ██ ██   ██ ██      ██");      
         Console.WriteLine("   ██      ████   ██████  █████   ███████     ██    ██ █████       ██   ███ ██    ██ ███████ ██      ███████"); 
         Console.WriteLine("   ██       ██    ██      ██           ██     ██    ██ ██          ██    ██ ██    ██ ██   ██ ██           ██"); 
-        Console.WriteLine("   ██       ██    ██      ███████ ███████      ██████  ██           ██████   ██████  ██   ██ ███████ ███████\n");
+        Console.WriteLine("   ██       ██    ██      ███████ ███████      ██████  ██           ██████   ██████  ██   ██ ███████ ███████\n\n");
     }
     private  void AsciiArtSimpleGoal()
     {
@@ -369,7 +370,7 @@ public class GoalManager
         Console.WriteLine("██      ██ ████  ████ ██   ██ ██      ██          ██       ██    ██ ██   ██ ██");      
         Console.WriteLine("███████ ██ ██ ████ ██ ██████  ██      █████       ██   ███ ██    ██ ███████ ██");      
         Console.WriteLine("     ██ ██ ██  ██  ██ ██      ██      ██          ██    ██ ██    ██ ██   ██ ██");      
-        Console.WriteLine("███████ ██ ██      ██ ██      ███████ ███████      ██████   ██████  ██   ██ ███████\n"); 
+        Console.WriteLine("███████ ██ ██      ██ ██      ███████ ███████      ██████   ██████  ██   ██ ███████\n\n"); 
     }
     private  void AsciiArtEternalGoal()
     {
@@ -378,7 +379,7 @@ public class GoalManager
         Console.WriteLine("██         ██    ██      ██   ██ ████   ██ ██   ██ ██          ██       ██    ██ ██   ██ ██");      
         Console.WriteLine("█████      ██    █████   ██████  ██ ██  ██ ███████ ██          ██   ███ ██    ██ ███████ ██");      
         Console.WriteLine("██         ██    ██      ██   ██ ██  ██ ██ ██   ██ ██          ██    ██ ██    ██ ██   ██ ██");      
-        Console.WriteLine("███████    ██    ███████ ██   ██ ██   ████ ██   ██ ███████      ██████   ██████  ██   ██ ███████\n"); 
+        Console.WriteLine("███████    ██    ███████ ██   ██ ██   ████ ██   ██ ███████      ██████   ██████  ██   ██ ███████\n\n"); 
     }
     private  void AsciiArtchecklistGoal()
     {
@@ -387,7 +388,7 @@ public class GoalManager
         Console.WriteLine("██      ██   ██ ██      ██      ██  ██      ██      ██ ██         ██        ██       ██    ██ ██   ██ ██");      
         Console.WriteLine("██      ███████ █████   ██      █████       ██      ██ ███████    ██        ██   ███ ██    ██ ███████ ██");      
         Console.WriteLine("██      ██   ██ ██      ██      ██  ██      ██      ██      ██    ██        ██    ██ ██    ██ ██   ██ ██");      
-        Console.WriteLine(" ██████ ██   ██ ███████  ██████ ██   ██     ███████ ██ ███████    ██         ██████   ██████  ██   ██ ███████\n");
+        Console.WriteLine(" ██████ ██   ██ ███████  ██████ ██   ██     ███████ ██ ███████    ██         ██████   ██████  ██   ██ ███████\n\n");
     }
     private  void AsciiArtCongratulations()
     {
@@ -414,7 +415,7 @@ public class GoalManager
         Console.WriteLine("██      ██   ██ ██    ██ ██          ██       ██    ██ ██   ██ ██      ██");      
         Console.WriteLine("███████ ███████ ██    ██ █████       ██   ███ ██    ██ ███████ ██      ███████"); 
         Console.WriteLine("     ██ ██   ██  ██  ██  ██          ██    ██ ██    ██ ██   ██ ██           ██"); 
-        Console.WriteLine("███████ ██   ██   ████   ███████      ██████   ██████  ██   ██ ███████ ███████"); 
+        Console.WriteLine("███████ ██   ██   ████   ███████      ██████   ██████  ██   ██ ███████ ███████\n\n"); 
     }
     private  void AsciiArtLoadGoals()
     {
@@ -432,7 +433,7 @@ public class GoalManager
         Console.WriteLine("██   ██ ██      ██      ██    ██ ██   ██ ██   ██     ██      ██    ██ ██      ████   ██    ██");    
         Console.WriteLine("██████  █████   ██      ██    ██ ██████  ██   ██     █████   ██    ██ █████   ██ ██  ██    ██");   
         Console.WriteLine("██   ██ ██      ██      ██    ██ ██   ██ ██   ██     ██       ██  ██  ██      ██  ██ ██    ██");    
-        Console.WriteLine("██   ██ ███████  ██████  ██████  ██   ██ ██████      ███████   ████   ███████ ██   ████    ██\n");    
+        Console.WriteLine("██   ██ ███████  ██████  ██████  ██   ██ ██████      ███████   ████   ███████ ██   ████    ██\n\n");    
     }                                                                          
                                                                                
 

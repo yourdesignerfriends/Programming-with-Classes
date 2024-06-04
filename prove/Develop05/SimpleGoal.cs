@@ -41,6 +41,6 @@ public class SimpleGoal : Goal
     easy to save to a file, and then load later.
     */
     {
-        return $"{_typeOfGoal}: {_shortName} | {_description} | {_points} | {IsComplete()}";
+        return $"{_typeOfGoal}: {_shortName} , {_description} , {_points} , {IsComplete()}";
     }
 }

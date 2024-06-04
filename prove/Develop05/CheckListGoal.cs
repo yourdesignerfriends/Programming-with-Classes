@@ -7,20 +7,20 @@ public class CheckListGoal : Goal
     // Attributes
     private string _typeOfGoal;
     private int _amountCompleted = 0;
-    private int _target;
+    private int _targetQuantity;
     private int _bonus;
     private bool _isComplete = false;
 
-    public CheckListGoal(string name, string description, int points, string goal, int target, int bonus) : base(name, description, points)
+    public CheckListGoal(string name, string description, int points, string goal, int targetQuantity, int bonus) : base(name, description, points)
     {
         _typeOfGoal = goal;
-        _target = target;
+        _targetQuantity = targetQuantity;
         _bonus = bonus;
     }
 
     public override void RecordEvent()
     {
-        if (IsComplete() && GetAmountCompleted() == _target)
+        if (IsComplete() && GetAmountCompleted() == _targetQuantity)
         {
             AddPoint();
             SetCheckMark();
@@ -49,7 +49,7 @@ public class CheckListGoal : Goal
     it should be overridden to shown the number of times the goal has been accomplished so far.
     */
     {
-        return $"{GetCheckMark()} {_shortName} - {_description} -- Progress status {GetAmountCompleted()} / {_target}";
+        return $"{GetCheckMark()} {_shortName} ({_description}) -- Currently complete {GetAmountCompleted()}/{_targetQuantity}";
     }
 
     public override string GetStringRepresentation()
@@ -58,7 +58,7 @@ public class CheckListGoal : Goal
     easy to save to a file, and then load later.
     */
     {
-        return $"{_typeOfGoal}: {_shortName} | {_description} | {_points} | {_bonus} | {_target} | {GetAmountCompleted()} | {IsComplete()}";
+        return $"{_typeOfGoal}: {_shortName} , {_description} , {_points} , {_bonus} , {_targetQuantity} , {GetAmountCompleted()} , {IsComplete()}";
     }
 
     public void SetAmountCompleted()
