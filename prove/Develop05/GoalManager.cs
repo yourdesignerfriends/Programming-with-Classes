@@ -345,7 +345,7 @@ public class GoalManager
                     checkListGoal.SetCheckMark();
                     checkListGoal.SetIsCompleteToTrue();
                 } 
-                checkListGoal.AddSaveAmountCompleted(int.Parse(contents[5].Trim()));
+                checkListGoal.AddAmountCompleted(int.Parse(contents[5].Trim()));
                 initialGoal.Add(checkListGoal);
             }
         }

@@ -25,6 +25,10 @@ public  abstract class Goal
     // This method should return true if the goal is completed.
     // The way you determine if a goal is complete is different for each type of goal.
 
+    public int GetCurrentPoint()
+    {
+        return _currentPoint;
+    }
     public void AddPoint()
     // Calculation to add the points obtained to the total.
     {
@@ -55,11 +59,6 @@ public  abstract class Goal
     */
     {
         return $"{GetCheckMark()} {_shortName} ({_description})";
-    }
-    
-    public int GetCurrentPoint()
-    {
-        return _currentPoint;
     }
 
     public string GetGoalName()

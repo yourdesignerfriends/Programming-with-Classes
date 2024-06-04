@@ -42,6 +42,21 @@ public class CheckListGoal : Goal
         return _isComplete;
     }
 
+    public int GetAmountCompleted()
+    {
+        return _amountCompleted;
+    }
+    
+    public void AddAmountCompleted(int amount)
+    {
+        _amountCompleted = amount;
+    }
+    public void SetAmountCompleted()
+    {
+        // x = x + 1 (value of x before it was incremented)
+        _amountCompleted++;
+    }
+
     public override string GetDetailsString()
     /*
     GetDetailsString - This method should return the details of a goal that could be shown in a list. 
@@ -61,24 +76,8 @@ public class CheckListGoal : Goal
         return $"{_typeOfGoal}: {_shortName} , {_description} , {_points} , {_bonus} , {_targetQuantity} , {GetAmountCompleted()} , {IsComplete()}";
     }
 
-    public void SetAmountCompleted()
-    {
-        _amountCompleted++;
-    }
-
-    public int GetAmountCompleted()
-    {
-        return _amountCompleted;
-    }
-
     public override void SetIsCompleteToTrue()
     {
         _isComplete = true;
     }
-
-    public void AddSaveAmountCompleted(int amount)
-    {
-        _amountCompleted = amount;
-    }
-
 }
