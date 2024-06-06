@@ -29,7 +29,7 @@ class Program
 
         Console.WriteLine("Hi, I'm Anita, your virtual assistant\nI'm here to help you create your:\n\n⏺️  Packing labels\n⏺️  Shipping labels\n⏺️  Compute final prices for billing\n\nlet's start 😁\n");
         
-        // Firts Customer and First order
+        // ***************************************** Firts Customer and First order ***********************************************
         Customer FirstCustomer = new();
         FirstCustomer.SetName();
         FirstCustomer.SetAddress("510 State Avenue", "Olympia", "Washington", "USA");
@@ -68,7 +68,7 @@ class Program
 
         Console.WriteLine("\n\n--------------------------------- Let's create a second order ------------------------------------\n\n\n");
 
-        // Second Customer and Second order
+        // *************************************** Second Customer and Second order **************************************************
         Customer SecondCustomer = new();
         SecondCustomer.SetName();
         SecondCustomer.SetAddress("Avenida Principal de la Urbina", "Caracas", "Distrito Capital", "Venezuela");
