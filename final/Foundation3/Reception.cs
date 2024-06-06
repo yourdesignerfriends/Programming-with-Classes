@@ -5,6 +5,11 @@ public class Reception : Event
     //Attributes
     private string _email;
 
+    // Get and Set email
+    public string GetEmail()
+    {
+        return _email;
+    }
     private void SetEmail()
     {
         Console.WriteLine("");
@@ -12,10 +17,7 @@ public class Reception : Event
         _email = Console.ReadLine();
     }
 
-    public string GetEmail()
-    {
-        return _email;
-    }
+    
 
     public void BookReceptionEvent()
     {
