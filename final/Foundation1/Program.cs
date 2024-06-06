@@ -43,7 +43,7 @@ class Program
         (with the commenter's name and text). Put each of these videos in a list.
         */
         
-        // Video 1
+        // ******************************************** Video 1 **************************************************************
         Video FirstVideo = new();
         FirstVideo.SetVideo("GokuroGaming", "Mario Kart 8 Deluxe", 37);
         videos.Add(FirstVideo);
@@ -56,7 +56,7 @@ class Program
         FirstVideo.SetComment(comment);
         
 
-        // Video 2
+        // ************************************************* Video 2 **********************************************************
         Video SecondVideo = new();
         SecondVideo.SetVideo("Korokashi", "Killed ALL enemies on the Great Plateau in Ultimate Zelda", 60);
         videos.Add(SecondVideo);
@@ -69,7 +69,7 @@ class Program
         SecondVideo.SetComment(comment);
         
         
-        // Video 3
+        // ************************************************** Video 3 **********************************************************
         Video ThirdVideo = new();
         ThirdVideo.SetVideo("Nitrilo", "N64 Goldeneye", 70);
         videos.Add(ThirdVideo);
